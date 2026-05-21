@@ -1,4 +1,4 @@
-# better-than-fish
+# better-than-fish 🐟
 
 A Claude Code skill for **agent-driven research notebooks**. The user
 directs; the agent writes, supersedes, distills, and indexes. The
@@ -56,17 +56,17 @@ This repo is a Claude Code **marketplace** with one plugin
 (`better-than-fish`). Installation is a two-step dance: add the
 marketplace, then install the plugin from it.
 
+### From a git remote
+
+```
+/plugin marketplace add https://github.com/1arie1/better-than-fish
+/plugin install better-than-fish@better-than-fish
+```
+
 ### From a local clone
 
 ```
 /plugin marketplace add /Users/you/certora/skills/better-than-fish
-/plugin install better-than-fish@better-than-fish
-```
-
-### From a git remote (once pushed)
-
-```
-/plugin marketplace add https://github.com/<you>/better-than-fish
 /plugin install better-than-fish@better-than-fish
 ```
 
