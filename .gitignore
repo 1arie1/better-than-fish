@@ -1,0 +1,9 @@
+
+# Editor / OS
+.DS_Store
+*.swp
+
+# Built/derived
+*.pyc
+__pycache__/
+

@@ -1,0 +1,152 @@
+# better-than-fish
+
+A Claude Code skill for **agent-driven research notebooks**. The user
+directs; the agent writes, supersedes, distills, and indexes. The
+point is to capture the *delta of understanding* that accumulates
+across a conversation in a form that survives into the next one.
+
+The name is the parable: don't hand the user a fish (one good answer
+that evaporates with the session). Build the boat (a knowledge base
+that compounds across sessions).
+
+## What it does
+
+When you're in a long-running technical investigation, this skill
+governs how the agent maintains a structured knowledge base — three
+tiers of durability, confidence markers, supersede-on-correction
+discipline, weekly/monthly distillation, a curated sessions log,
+and a parked loose-ends backlog.
+
+The user role is supervisory. Trigger phrases drive specific actions:
+
+- "note this" / "save this" — agent writes a journal entry
+- "wrong, X" / "actually X" — agent finds and supersedes the related
+  note, records what made the wrong claim plausible
+- "park this" — moves current investigation to `loose-ends/parked.md`
+  with full resume context
+- "digest" — distills the journal into weekly/monthly summary
+- "what do we know about X" — agent greps notes first, then answers
+
+## What it isn't
+
+- Not for one-off coding tasks
+- Not human-navigable docs (those need different conventions)
+- Not auto-magic — the user has to engage the triggers; the agent
+  proposes proactive writes early on, switches to direct writes once
+  defaults align
+
+## Three tiers
+
+```
+durable/      [FACT] math, paper, source-grounded reality, recorded
+              design patterns. Time-invariant.
+empirical/    [EMP]  repeated empirical claims with version stamps.
+              Stable but version-bound.
+journal/      [OBS] [HYP] dated single events. Distill to empirical
+              if they recur, fade if they're flukes.
+```
+
+Plus `loose-ends/parked.md` (backlog), `sessions.md` (curated session
+index), and optional top-level concept directories for cross-cutting
+tools.
+
+## Install
+
+This repo is a Claude Code **marketplace** with one plugin
+(`better-than-fish`). Installation is a two-step dance: add the
+marketplace, then install the plugin from it.
+
+### From a local clone
+
+```
+/plugin marketplace add /Users/you/certora/skills/better-than-fish
+/plugin install better-than-fish@better-than-fish
+```
+
+### From a git remote (once pushed)
+
+```
+/plugin marketplace add https://github.com/<you>/better-than-fish
+/plugin install better-than-fish@better-than-fish
+```
+
+The name appears twice: once for the marketplace, once for the plugin
+— they happen to share the name in this single-plugin repo.
+
+### Update later
+
+```
+/plugin marketplace update better-than-fish
+```
+
+### Uninstall
+
+```
+/plugin uninstall better-than-fish@better-than-fish
+/plugin marketplace remove better-than-fish
+```
+
+### Manual symlink (for development of the skill itself)
+
+```sh
+ln -s /Users/you/certora/skills/better-than-fish/plugins/better-than-fish/skills/better-than-fish \
+      ~/.claude/skills/better-than-fish
+```
+
+Bypasses the plugin system; live-edits flow through immediately.
+Remove the symlink before using `/plugin install` to avoid collisions.
+
+## Configuration
+
+| variable | meaning | default |
+|---|---|---|
+| `BTF_NOTES_DIR` | path to the notes directory | (asks once if unset) |
+| `BTF_DIGEST_DAY` | weekday to remind about weekly digest | Friday |
+
+Both optional. The skill works with no configuration if the user
+points the agent at the directory once; the agent records the choice
+in the project's `CLAUDE.md`.
+
+## Bootstrap
+
+For a new project, ask the agent something like:
+
+> Bootstrap better-than-fish notes at `<path>` for this project.
+
+The agent creates the directory structure, writes a starter
+`CLAUDE.md`, and proposes initial `durable/` notes for any
+project-stable facts that came up in the bootstrap conversation.
+Subsequent sessions follow the trigger vocabulary above.
+
+## Structure
+
+```
+better-than-fish/                            ← marketplace root
+├── .claude-plugin/
+│   └── marketplace.json                     ← lists the plugin
+├── README.md
+├── LICENSE
+└── plugins/better-than-fish/                ← the plugin
+    ├── .claude-plugin/plugin.json
+    └── skills/better-than-fish/
+        ├── SKILL.md                          # main skill instructions
+        ├── references/
+        │   ├── format.md                     # markers, file naming
+        │   ├── distillation.md               # promotion criteria
+        │   └── corrections.md                # supersede pattern
+        └── examples/
+            ├── correction-walkthrough.md
+            └── first-week-bootstrap.md
+```
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+## Contributing
+
+This skill emerged from real research workflow needs. Improvements
+that strengthen the **triage** part (when does the agent decide a
+finding is worth a note?) or the **distillation** part (when does
+something graduate from journal → empirical → durable?) are
+especially welcome.

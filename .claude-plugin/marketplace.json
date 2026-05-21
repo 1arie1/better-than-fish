@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "better-than-fish",
+  "description": "Agent-driven research notebooks: capture the delta of understanding across sessions instead of evaporating it with each conversation.",
+  "owner": {
+    "name": "Arie Gurfinkel",
+    "email": "arie@certora.com"
+  },
+  "plugins": [
+    {
+      "name": "better-than-fish",
+      "description": "A skill for technical research and engineering investigations: human directs, agent writes, supersedes, distills, and indexes. Three-tier knowledge base (durable / empirical / journal) with confidence markers and a sessions log.",
+      "source": "./plugins/better-than-fish",
+      "category": "productivity",
+      "homepage": "https://github.com/arie/better-than-fish"
+    }
+  ]
+}
