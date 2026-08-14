@@ -1,3 +1,8 @@
+---
+name: better-than-fish
+description: Maintain agent-driven research notebooks that preserve technical understanding across sessions. Use for long-running technical research and engineering investigations when the user says "note this", "save this", "park this", "digest", corrects an earlier claim, asks "what do we know about X", wants to bootstrap structured research notes, or wants durable, empirical, journal, correction, session, and loose-end records maintained on their behalf. Do not use for one-off coding tasks, ticket tracking, or notes primarily intended for human navigation.
+---
+
 # better-than-fish
 
 A skill for agent-driven research notebooks. The user directs; the agent
@@ -28,15 +33,18 @@ Notes live in a single project directory configured by the user. The agent
 discovers it in this order:
 
 1. `$BTF_NOTES_DIR` env var, if set
-2. A `CLAUDE.md` in the current project root that says "notes at: PATH"
+2. An `AGENTS.md` or `CLAUDE.md` in the current project root that says
+   "notes at: PATH". Prefer the host-native file (`AGENTS.md` for Codex,
+   `CLAUDE.md` for Claude Code); honor either when already present.
 3. The agent asks the user once, records the answer in the project's
-   `CLAUDE.md`, and uses it from then on
+   host-native instruction file, and uses it from then on
 
 The directory layout is:
 
 ```
 <notes-dir>/
-  CLAUDE.md            <= 80 lines. Project-stable conventions only.
+  AGENTS.md or         <= 80 lines. Project-stable conventions only.
+  CLAUDE.md
                           No active-investigation content; that lives in
                           journal/. Always loaded.
   durable/             [FACT] — math, paper, source-grounded reality,
@@ -147,7 +155,8 @@ The agent acts on these phrases without further confirmation:
 - **"what do we know about X"** — grep notes first, summarize what's there,
   then answer. Don't re-derive what's already written down.
 
-The user may add project-specific triggers in the project CLAUDE.md.
+The user may add project-specific triggers in the project's `AGENTS.md` or
+`CLAUDE.md`.
 
 ## Proactive writes (without being told)
 
@@ -177,7 +186,8 @@ The agent commits writes proactively in these situations:
 
 At the start of any session involving the project:
 
-1. Read `<notes-dir>/CLAUDE.md` for project conventions and triggers.
+1. Read `<notes-dir>/AGENTS.md` or `<notes-dir>/CLAUDE.md` for project
+   conventions and triggers. Prefer the host-native file when both exist.
 2. Skim `durable/` index (filenames + descriptions) to understand the
    landscape.
 3. Read the most recent weekly digest if it exists — it tells you the
@@ -240,8 +250,8 @@ decisions worth pointing back to.
 Each entry has:
 
 - **Date** (header)
-- **Session** — the conversation's short name (e.g. set via `/rename`),
-  if the host has one. Lets agents and humans correlate the entry with
+- **Session** — the conversation's short name, if the host exposes one.
+  Lets agents and humans correlate the entry with
   the actual conversation log. Backtick-quoted: `\`session-name\``.
 - **Theme** — one-line description of what the session was about
 - **Key outputs** — list of new/modified notes, prototype code, etc.
@@ -280,9 +290,10 @@ Things that look reasonable but degrade the system:
 
 ## Bootstrap
 
-For a new project: run `references/bootstrap.md` walkthrough. The agent
+For a new project: follow `examples/first-week-bootstrap.md`. The agent
 creates the directory structure, draws conventions from the user's first
-session, writes a starter `CLAUDE.md` in the notes directory.
+session, and writes a starter host-native instruction file (`AGENTS.md` for
+Codex or `CLAUDE.md` for Claude Code) in the notes directory.
 
 ## Configuration
 
