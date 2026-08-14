@@ -1,6 +1,6 @@
 # better-than-fish 🐟
 
-A Claude Code skill for **agent-driven research notebooks**. The user
+A Claude Code and Codex skill for **agent-driven research notebooks**. The user
 directs; the agent writes, supersedes, distills, and indexes. The
 point is to capture the *delta of understanding* that accumulates
 across a conversation in a form that survives into the next one.
@@ -96,6 +96,21 @@ ln -s /Users/you/certora/skills/better-than-fish/plugins/better-than-fish/skills
 Bypasses the plugin system; live-edits flow through immediately.
 Remove the symlink before using `/plugin install` to avoid collisions.
 
+### Codex
+
+Install the same skill with a symlink so edits in this repository are picked
+up immediately:
+
+```sh
+mkdir -p ~/.codex/skills
+ln -s /Users/you/certora/skills/better-than-fish/plugins/better-than-fish/skills/better-than-fish \
+      ~/.codex/skills/better-than-fish
+```
+
+Restart Codex after installing it. Invoke the skill explicitly with
+`$better-than-fish`, or use one of its trigger phrases such as "note this",
+"park this", "digest weekly", or "what do we know about X?".
+
 ## Configuration
 
 | variable | meaning | default |
@@ -104,8 +119,8 @@ Remove the symlink before using `/plugin install` to avoid collisions.
 | `BTF_DIGEST_DAY` | weekday to remind about weekly digest | Friday |
 
 Both optional. The skill works with no configuration if the user
-points the agent at the directory once; the agent records the choice
-in the project's `CLAUDE.md`.
+points the agent at the directory once; the agent records the choice in the
+project's `AGENTS.md` (Codex) or `CLAUDE.md` (Claude Code).
 
 ## Bootstrap
 
@@ -113,8 +128,8 @@ For a new project, ask the agent something like:
 
 > Bootstrap better-than-fish notes at `<path>` for this project.
 
-The agent creates the directory structure, writes a starter
-`CLAUDE.md`, and proposes initial `durable/` notes for any
+The agent creates the directory structure, writes a starter `AGENTS.md`
+(Codex) or `CLAUDE.md` (Claude Code), and proposes initial `durable/` notes for any
 project-stable facts that came up in the bootstrap conversation.
 Subsequent sessions follow the trigger vocabulary above.
 
@@ -129,7 +144,8 @@ better-than-fish/                            ← marketplace root
 └── plugins/better-than-fish/                ← the plugin
     ├── .claude-plugin/plugin.json
     └── skills/better-than-fish/
-        ├── SKILL.md                          # main skill instructions
+        ├── SKILL.md                          # shared skill instructions
+        ├── agents/openai.yaml                # Codex UI metadata
         ├── references/
         │   ├── format.md                     # markers, file naming
         │   ├── distillation.md               # promotion criteria

@@ -4,7 +4,7 @@ The minimum viable starter for a new project. Approximate sizes shown.
 
 ```
 ~/<project>/research/
-├── CLAUDE.md                                       (60 lines, conventions only)
+├── AGENTS.md or CLAUDE.md                          (60 lines, conventions only)
 ├── papers/
 │   └── primary-reference.pdf                       (source corpus)
 ├── durable/
@@ -29,9 +29,10 @@ The minimum viable starter for a new project. Approximate sizes shown.
     └── ...                                          investigations)
 ```
 
-## What's in CLAUDE.md
+## What's in the host instruction file
 
-The notes-dir CLAUDE.md is short and project-specific. Example:
+The notes-dir `AGENTS.md` (Codex) or `CLAUDE.md` (Claude Code) is short and
+project-specific. Example:
 
 ```markdown
 # Project: Z3 NLA research notes

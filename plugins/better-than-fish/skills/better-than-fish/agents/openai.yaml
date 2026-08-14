@@ -1,0 +1,7 @@
+interface:
+  display_name: "Better Than Fish"
+  short_description: "Maintain durable agent-driven research notes"
+  default_prompt: "Use $better-than-fish to capture and maintain the durable findings from this investigation."
+
+policy:
+  allow_implicit_invocation: true

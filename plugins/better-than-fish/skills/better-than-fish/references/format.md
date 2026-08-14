@@ -115,7 +115,7 @@ note is fine.
 
 | location | typical length | hard cap |
 |---|---|---|
-| CLAUDE.md (notes dir root) | 50-80 lines | 100 lines |
+| AGENTS.md or CLAUDE.md (notes root) | 50-80 lines | 100 lines |
 | durable/ note | 50-200 lines | 300 |
 | journal/ entry | 30-100 lines | 200 |
 | weekly/ digest | 50-100 lines | 150 |
